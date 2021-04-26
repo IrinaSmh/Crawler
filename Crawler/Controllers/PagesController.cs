@@ -45,7 +45,7 @@ namespace Crawler.Controllers
         {
             var page = await _context.Pages.FindAsync(id);
 
-            if (page == null)
+            if (page == null || page.Status == 0 || page.Status == 2)
             {
                 return NotFound();
             }
