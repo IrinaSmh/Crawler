@@ -7,13 +7,13 @@ namespace Crawler.Models
 
         public Page(Guid id, string url)
         {
-            this.id = id;
-            this.url = url;
+            this.Id = id;
+            this.Url = url;
         }
 
-        public Guid id { set; get; }
-        public string url { set; get; }
-        public int status { set; get; }
-        public int countOfWords { set; get; }
+        public Guid Id { set; get; }
+        public string Url { set; get; }
+        public int Status { set; get; }
+        public int CountOfWords { set; get; }
     }
 }

@@ -11,8 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Crawler.Controllers
 {
- 
-
     [Route("crawler/")]
     [ApiController]
     public class PagesController : ControllerBase
@@ -39,7 +37,7 @@ namespace Crawler.Controllers
                 return NotFound();
             }
 
-            return page.status;
+            return page.Status;
         }
 
         [HttpGet("result/{id}")]
@@ -52,7 +50,7 @@ namespace Crawler.Controllers
                 return NotFound();
             }
 
-            return page.countOfWords;
+            return page.CountOfWords;
         }
 
         
@@ -108,21 +106,21 @@ namespace Crawler.Controllers
 
         private async Task<ActionResult<Page>> EditPost(Guid? id, int statusCode, int result, PageContext pageContext)
         {
-                if (id == null)
-                {
-                    return NotFound();
-                }
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-                var pageToUpdate = await pageContext.Pages.FirstOrDefaultAsync(p=> p.id == id);
-                if (pageToUpdate != null)
-                {
-                    pageToUpdate.status = statusCode;
-                    pageToUpdate.countOfWords = result;
-                } 
+            var pageToUpdate = await pageContext.Pages.FirstOrDefaultAsync(p=> p.Id == id);
+            if (pageToUpdate != null)
+            {
+                pageToUpdate.Status = statusCode;
+                pageToUpdate.CountOfWords = result;
+            } 
                
-                await pageContext.SaveChangesAsync();
+            await pageContext.SaveChangesAsync();
             
-            return CreatedAtAction("GetPage", new { id = pageToUpdate.id }, pageToUpdate);
+            return CreatedAtAction("GetPage", new { id = pageToUpdate.Id }, pageToUpdate);
         }
 
 
@@ -137,11 +135,10 @@ namespace Crawler.Controllers
             {
                 using var scope = _serviceScopeFactory.CreateScope();
                 var db = scope.ServiceProvider.GetService<PageContext>();
-                await GetAndSeparateHtml(db, page.id, url);
-
+                await GetAndSeparateHtml(db, page.Id, url);
             })).Start();
 
-            return page.id;
+            return page.Id;
         }
     }
 }
